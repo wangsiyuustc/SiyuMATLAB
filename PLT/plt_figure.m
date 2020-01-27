@@ -1,6 +1,29 @@
-function [g, ax] = plt_figure(nx, ny, rect, margin, gap)
+function [g, ax] = plt_figure(nx, ny, rect, margin, gap, option)
     global plt_params
-    plt_setparams;
+    plt_setfig('new');
+    if (exist('nx')~=1) || isempty(nx) || nx < 1
+        nx = 1;
+    end
+    if (exist('ny')~=1) || isempty(ny) || ny < 1
+        ny = 1;
+    end
+    if ~exist('rect') || ~exist('margin') || ~exist('gap') || isempty(rect) || isempty(margin) || isempty(gap)
+        fmt = plt_params.param_setting.format;
+        if exist('option') && option == 1
+            istitle = 't';
+        else
+            istitle = '';
+        end
+        try
+            rect = plt_params.param_preset.figconfig.(fmt).(['fig_size', istitle]){nx,ny};
+            margin = plt_params.param_preset.figconfig.(fmt).(['fig_margin', istitle]){nx,ny};
+            gap = plt_params.param_preset.figconfig.(fmt).(['fig_gap', istitle]){nx,ny};
+        catch
+            rect = plt_params.param_preset.figconfig.(fmt).(['fig_size', istitle]){1,1};
+            margin = plt_params.param_preset.figconfig.(fmt).(['fig_margin', istitle]){1,1};
+            gap = plt_params.param_preset.figconfig.(fmt).(['fig_gap', istitle]){1,1};
+        end
+    end
     hg = ones(1, nx+1) * gap(1);
     wg = ones(1, ny+1) * gap(2);
     hg(1) = margin(1);
@@ -31,6 +54,9 @@ function [g, ax] = plt_figure(nx, ny, rect, margin, gap)
         ax(i) = gca;
         set(gca, 'tickdir', 'out');
     end
-    plt_params.fig = g;
-    plt_params.ax = ax;
+    plt_params.gf = g;
+    plt_params.axes = ax;
+    plt_params.axi = 0;
+    plt_params.isholdon = false;
+    plt_setfig('size', [nx*ny]);
 end
