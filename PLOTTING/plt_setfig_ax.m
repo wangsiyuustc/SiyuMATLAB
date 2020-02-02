@@ -19,7 +19,7 @@ function plt_setfig_ax(varargin)
         end
         switch arg
             case 'color'
-                colorfunc = @(str)cellfun(@(x)iff(isnumeric(x), x, plt_params.param_preset.colors.(x)),str,'UniformOutput',false);
+                colorfunc = @(str)cellfun(@(x)tool_iif(isnumeric(x), x, plt_params.param_preset.colors.(x)),str,'UniformOutput',false);
                 if ~iscell(val)
                     val = {val};
                 end

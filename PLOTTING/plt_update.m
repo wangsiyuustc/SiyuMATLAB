@@ -6,6 +6,7 @@ function plt_update(option)
         axs = 1:length(plt_params.axes);
     end
     for axi = axs
+        axes(plt_params.axes(axi));
         if ~isempty(plt_params.param_fig.xtick)
             if isempty(plt_params.param_fig.xticklabel)
                 set(gca,'XTick', plt_params.param_fig.xtick{axi});
@@ -50,8 +51,8 @@ function plt_update(option)
             if ~iscell(leg)
                 leg = {leg};
             end
-            if length(leg) == length(plt_params.param_fig.leglist{axi})
-                lgd = legend(plt_params.param_fig.leglist{axi}, leg,...
+            if length(leg) == length(plt_params.leglist{axi})
+                lgd = legend(plt_params.leglist{axi}, leg,...
                     'Location', tlegloc);
                 lgd.FontSize = fontsize;
                 if plt_params.param_figsetting.islegbox
@@ -64,4 +65,6 @@ function plt_update(option)
             end
         end
     end
+    axes(plt_params.axes(plt_params.axi));
+    plt_params.param_fig.locked = false;
 end

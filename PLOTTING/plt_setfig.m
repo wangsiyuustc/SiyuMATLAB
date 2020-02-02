@@ -7,7 +7,6 @@ function plt_setfig(varargin)
         arg = varargin{i};
         if ~isfield(plt_params, 'param_fig') || ...
                 (strcmp(arg, 'new') && ~plt_params.param_fig.locked)
-            plt_params.param_fig.leglist = [];
             plt_params.param_fig.color = [];
             plt_params.param_fig.xlim = [];
             plt_params.param_fig.ylim = [];
@@ -23,7 +22,7 @@ function plt_setfig(varargin)
             plt_params.n_ax = NaN;
         end
         if strcmp(arg, 'new')
-            i = i + 1;            
+            i = i + 1;
             continue;
         end
         val = varargin{i+1};
@@ -40,10 +39,8 @@ function plt_setfig(varargin)
                 plt_params.n_ax = val;
                 continue;
             case 'color'
-                colorfunc = @(str)cellfun(@(x)iff(isnumeric(x), x, plt_params.param_preset.colors.(x)),str,'UniformOutput',false);
-                if ~iscell(val)
-                    val = {val};
-                end
+                colorfunc = @(str)cellfun(@(x)tool_iif(isnumeric(x), x, plt_params.param_preset.colors.(x)),str,'UniformOutput',false);
+                val = tool_encell(val);
                 if ~iscell(val{1}) % single plot, multiple lines
                     val = colorfunc(val);
                 else
@@ -54,9 +51,7 @@ function plt_setfig(varargin)
                     val = tval;
                 end
         end
-        if ~iscell(val) % same for each plot
-            val = {val};
-        end
+        val = tool_encell(val);
         if isnan(n_ax)
             plt_params.param_fig.(arg) = val;
             warning('n_ax not defined');

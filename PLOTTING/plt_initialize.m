@@ -38,26 +38,20 @@ function plt_initialize(varargin)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % (preset) set up colors
-    colors = [];
-    colors.AZred = [171,5,32]/256;
-    colors.AZblue = [12,35,75]/256;
-    colors.AZcactus = [92, 135, 39]/256;
-    colors.AZsky = [132, 210, 226]/256;
-    colors.AZriver = [7, 104, 115]/256;
-    colors.AZsand = [241, 158, 31]/256;
-    colors.AZmesa = [183, 85, 39]/256;
-    colors.AZbrick = [74, 48, 39]/256;
-    fns = fieldnames(colors);
-    for ci = 1:length(fns)
-        colors.(strcat('light_', fns{ci})) = 0.5*colors.(fns{ci}) + 0.5*ones(1,3);
-    end
-    colors.black = [0 0 0];
-    colors.white = [1 1 1];
+    colors = generate_colors;
     plt_params.param_preset.colors = colors;
     % (preset) set up figure configuration - preset
-    figconfig.paper.fig_size{1,1} = [0.1 0.15 0.4 0.65];
-    figconfig.paper.fig_margin{1,1} = [0.17, 0.17, 0.05, 0.05];
+    figconfig.paper.fig_size{1,1} = [0.3 0.15 0.4 0.65];
+    figconfig.paper.fig_margin{1,1} = [0.17, 0.2, 0.05, 0.05];
     figconfig.paper.fig_gap{1,1} = [0.1 0.1];
+
+    figconfig.paper.fig_sizet{1,1} = [0.3 0.15 0.4 0.68];
+    figconfig.paper.fig_margint{1,1} = [0.17, 0.2, 0.08, 0.05];
+    figconfig.paper.fig_gapt{1,1} = [0.1 0.1];
+
+    figconfig.paper.fig_sizet{2,3} = [0.1 0.1 0.65 0.8];
+    figconfig.paper.fig_margint{2,3} = [0.17, 0.1, 0.08, 0.05];
+    figconfig.paper.fig_gapt{2,3} = [0.2 0.1];
     plt_params.param_preset.figconfig = figconfig;
 
 

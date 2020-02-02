@@ -58,5 +58,6 @@ function [g, ax] = plt_figure(nx, ny, rect, margin, gap, option)
     plt_params.axes = ax;
     plt_params.axi = 0;
     plt_params.isholdon = false;
+    plt_params.leglist = cell(nx*ny);
     plt_setfig('size', [nx*ny]);
 end

@@ -4,15 +4,16 @@ function plt_setuserparam(fd, vars)
     i = 1;
     while i <= length(vars)
         arg = vars{i};
-        val = vars{i+1};
         idx = find(strcmp(inarglist, arg));
-        if ~isempty(idx)
-            plt_params.(fd).(arg) = val;
-        elseif strcmp('help', arg)
+        if strcmp('help', arg)
+            i = i + 1;
             disp(inarglist);
+        elseif ~isempty(idx)
+            val = vars{i+1};
+            i = i + 2;
+            plt_params.(fd).(arg) = val;
         else
             warning(sprintf('command not recognized: %s', arg));
         end
-        i = i + 2;
     end
 end
