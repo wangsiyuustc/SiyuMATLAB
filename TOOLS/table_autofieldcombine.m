@@ -8,7 +8,8 @@ function tab = table_autofieldcombine(tab)
     fs_ = unique(arrayfun(@(x)fs{x}(1:idx_{x}(end)), is_,'UniformOutput',false));
     for fi = 1:length(fs_)
         fn = fs_{fi};
-        idx_col = find(cellfun(@(x)length(fn) <= length(x) && strcmp(x(1:length(fn)),fn), fs));
+        idx_col = find(arrayfun(@(x)length(fn) <= length(fs{x}) && ...
+            strcmp(fs{x}(1:length(fn)),fn) && idx_{x}(end) == length(fn), 1:length(fs)));
         ord = arrayfun(@(x)str2num(fs{x}(idx_{x}(end)+1:end)), idx_col);
         [~, idx] = sort(ord);
         idx_col = idx_col(idx);
