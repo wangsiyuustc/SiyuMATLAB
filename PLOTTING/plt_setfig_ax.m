@@ -29,9 +29,6 @@ function plt_setfig_ax(varargin)
                     error('wrong color format');
                 end
         end
-        if ~iscell(val) % same for each plot
-            val = {val};
-        end
         plt_params.param_fig.(arg){axi} = val;
     end
     plt_params.param_fig.locked = true;

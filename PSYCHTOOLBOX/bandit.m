@@ -35,13 +35,13 @@ classdef bandit < exp_psychtoolbox
             obj.numbers = tool_encell(new);
         end
         function setup(obj,w,h,w_lever,h_lever,pos_lever,penwidth,dotradius,horizon,lever_side, font_bandit, color_frame, color_filled)
-            obj.w = w; % width of the box in each bandit
-            obj.h = h; % height of the box in each bandit
-            obj.w_lever = w_lever; % width of the lever
-            obj.h_lever = h_lever; % height of the lever
-            obj.pos_lever = pos_lever; % Position of the lever, at where in the bandit
-            obj.penwidth = penwidth; % width of the bar
-            obj.dotradius = dotradius; % size of the handle
+            obj.w = round(w); % width of the box in each bandit
+            obj.h = round(h); % height of the box in each bandit
+            obj.w_lever = round(w_lever); % width of the lever
+            obj.h_lever = round(h_lever); % height of the lever
+            obj.pos_lever = round(pos_lever); % Position of the lever, at where in the bandit
+            obj.penwidth = round(penwidth); % width of the bar
+            obj.dotradius = round(dotradius); % size of the handle
             obj.horizon = horizon; % horizon
             obj.lever_side = lever_side; % side of the handle
             obj.font_bandit = font_bandit; % font format for the bandit
@@ -58,7 +58,7 @@ classdef bandit < exp_psychtoolbox
             obj.tp_left = left;
             obj.tp_top = top;
             for i = 1:obj.horizon
-                obj.rect(i,:) = [left+0; top+h*(i-1); left+w; top+h*i];
+                obj.rect(i,:) = round([left+0; top+h*(i-1); left+w; top+h*i]);
             end
         end
         function draw(obj, played, nfilled)
@@ -95,7 +95,9 @@ classdef bandit < exp_psychtoolbox
                 toV = fromV - obj.h_lever;
             end
             Screen('Drawline', obj.window.id, obj.color_frame, fromH, fromV, toH, toV, obj.penwidth);
-            Screen('DrawDots', obj.window.id, [toH toV], obj.dotradius, obj.color_frame, [0 0]);
+            if obj.dotradius > 0
+                Screen('DrawDots', obj.window.id, [toH toV], obj.dotradius, obj.color_frame, [0 0]);
+            end
         end
 
     end

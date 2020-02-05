@@ -8,7 +8,7 @@ function plt_new()
         warning('no current axes available, start a new figure');
         plt_figure;
     end
-    if (plt_params.isholdon && plt_params.current.axi > 0)
+    if (plt_params.isholdon && plt_params.axi > 0)
         set(plt_params.gf, 'CurrentAxes', ...
             plt_params.axes(plt_params.axi));
         hold on;

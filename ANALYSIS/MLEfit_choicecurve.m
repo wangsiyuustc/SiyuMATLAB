@@ -66,7 +66,11 @@ function [xfit, negLLbest] = MLEfit_choicecurve(choice, dR, additionalX, isbias,
             else
                 problems.objective = @(x)-logLL_choicecurve(choice, dR, 0, additionalX, x(1), x(2:end), 0, 0);
             end
+            try
             [xfit_raw, negLL] = fmincon(problems);
+            catch
+                1
+            end
             if negLL < negLLbest
                 negLLbest = negLL;
                 xfit.noise = xfit_raw(1);
@@ -145,6 +149,7 @@ function [LL] = logLL_choicecurve(choice, dR, bias, additionalX, noise, w_additi
     p = p_value * (1-lapse1-lapse2) + lapse1;
     p(choice == 0) = 1 - p(choice == 0);
     logp = log(p);
+    logp = logp(~isnan(logp));
     if any(abs(logp) == Inf)
         logp = logp(abs(logp) < Inf); % this may lead to issues, need to look into this later
         warning('undefined at initial point, remove -Inf');

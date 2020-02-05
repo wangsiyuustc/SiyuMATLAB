@@ -1,6 +1,9 @@
 function [sub] = ANALYSIS_sub(games, idxsub, options, oplist, funclist)
+    % [sub] = ANALYSIS_sub(games, idxsub, options, oplist, funclist)
     % by Siyu Wang (sywangr@email.arizona.edu)
     % 08/08/2019
+    games = table_autofieldcombine(games);
+    options = tool_encell(options);
     n_sub = length(idxsub);
     sub = game2sub(games, idxsub);
     for oi = 1:length(options)
@@ -16,6 +19,7 @@ function [sub] = ANALYSIS_sub(games, idxsub, options, oplist, funclist)
         disp(['analysis: ' option '...']);
         clear tsub;
         for si = 1:n_sub
+            disp(['    ...processing subject ' num2str(si) '/' num2str(n_sub)]);
             tsub(si) = tfunc(games(idxsub{si},:));
         end
         sub = struct_merge(sub, tsub);

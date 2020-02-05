@@ -21,15 +21,22 @@ function gp = ANALYSIS_group(sub, suffixcompare, additional_compare, switch_pair
             if switch_paircompare && size(td,2) == 2
                 [~,gp.(['pvalue_' fn])] = ttest(diff(td')');
             end
-        elseif (iscell(td) && all(cellfun(@(x)isnumeric(x), td)))
+        elseif (iscell(td) && all(cellfun(@(x)isnumeric(x), td), 'all'))
             td0 = td;
             nx = size(td0{1},1);
             ny = size(td0{1},2);
             for nxi = 1:nx
                 for nyi = 1:ny
                     td = cellfun(@(x)x(nxi,nyi), td0);
-                    gp.(['av_' fn])(nxi, nyi) = nanmean(td);
-                    gp.(['ste_' fn])(nxi, nyi) = nanstd(td)./sqrt(sum(~isnan(td)));
+                    if size(td,2) > 1 || nx > 1
+                        for ci = 1:size(td, 2)
+                            gp.(['av_' fn]){ci}(nxi, nyi) = nanmean(td(:,ci));
+                            gp.(['ste_' fn]){ci}(nxi, nyi) = nanstd(td(:,ci))./sqrt(sum(~isnan(td(:,ci))));
+                        end
+                    else
+                        gp.(['av_' fn])(nxi, nyi) = nanmean(td);
+                        gp.(['ste_' fn])(nxi, nyi) = nanstd(td)./sqrt(sum(~isnan(td)));
+                    end
                 end
             end
         elseif length(unique(td)) == 1 % all elements are the same

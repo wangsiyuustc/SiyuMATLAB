@@ -48,7 +48,11 @@ function plt_initialize(varargin)
     figconfig.paper.fig_sizet{1,1} = [0.3 0.15 0.4 0.68];
     figconfig.paper.fig_margint{1,1} = [0.17, 0.2, 0.08, 0.05];
     figconfig.paper.fig_gapt{1,1} = [0.1 0.1];
-
+    
+    figconfig.paper.fig_size{1,2} = [0.1 0.15 0.85 0.7];
+    figconfig.paper.fig_margin{1,2} = [0.15, 0.1, 0.05, 0.03];
+    figconfig.paper.fig_gap{1,2} = [0.1 0.1];
+    
     figconfig.paper.fig_sizet{2,3} = [0.1 0.1 0.65 0.8];
     figconfig.paper.fig_margint{2,3} = [0.17, 0.1, 0.08, 0.05];
     figconfig.paper.fig_gapt{2,3} = [0.2 0.1];
@@ -92,9 +96,6 @@ end
 %figconfig.paper.fig_margint{1,2} = [0.18, 0.12, 0.1, 0.05];%[];%[0.2, 0.15, 0.1, 0.05];
 %figconfig.paper.fig_gapt{1,2} =  [0.12 0.12];%[];%[0.1 0.1];
 %
-%figconfig.paper.fig_size{1,2} = [0.1 0.15 0.85 0.7];
-%figconfig.paper.fig_margin{1,2} = [0.15, 0.07, 0.05, 0.03];
-%figconfig.paper.fig_gap{1,2} = [0.1 0.1];
 %     figconfig.paper.fig_sizet{1,2} = [0.1 0.15 0.7 0.65];%[];%[0.2 0.15 0.5 0.8];
 %     figconfig.paper.fig_margint{1,2} = [0.23, 0.13, 0.1, 0.05];%[];%[0.2, 0.15, 0.1, 0.05];
 %     figconfig.paper.fig_gapt{1,2} =  [0.15 0.15];%[];%[0.1 0.1];

@@ -36,9 +36,9 @@ classdef exp_psychtoolbox < handle
         function setup_color(obj)
             obj.colors = generate_colors;
         end
-        function setup_window(obj, window, windowmode, color_background, synctest)
-            if ~exist('window')
-                window = [];
+        function setup_window(obj, win, windowmode, color_background, synctest)
+            if ~exist('win')
+                win = [];
             end
             if ~exist('windowmode')
                 windowmode = [];
@@ -46,25 +46,25 @@ classdef exp_psychtoolbox < handle
             if ~exist('color_background')
                 color_background = obj.colors.black;
             end
-            if ~isempty(window)
-                obj.window = window;
+            if ~isempty(win)
+                obj.window = win;
             else
                 screens = Screen('Screens');
                 screenNumber = max(screens);
                 Screen('Preference', 'SkipSyncTests', 1);
-                [window.id window.windowRect] = PsychImaging('OpenWindow', screenNumber, color_background, windowmode);
-                [window.w window.h] = Screen('WindowSize', window.id);
-                [center.x center.y] = RectCenter(window.windowRect);
-                window.center = center;
-                obj.window = window;
+                [win.id win.windowRect] = PsychImaging('OpenWindow', screenNumber, color_background, windowmode);
+                [win.w win.h] = Screen('WindowSize', win.id);
+                [center.x center.y] = RectCenter(win.windowRect);
+                win.center = center;
+                obj.window = win;
                 obj.window.scalefactor = obj.window.h/1080; % set default to 1080
                 if obj.window.scalefactor > 1
                     obj.window.scalefactor = 1;
                 end
                 obj.font.fontsize = round(obj.font.fontsize * obj.window.scalefactor);
                 Screen('TextSize', obj.window.id, obj.font.fontsize);
-                Screen('TextFont', window.id, obj.font.fonttype);
-                Screen('TextColor', window.id, obj.font.fontcolor);
+                Screen('TextFont', win.id, obj.font.fonttype);
+                Screen('TextColor', win.id, obj.font.fontcolor);
             end
         end
         function time = flip(obj)
