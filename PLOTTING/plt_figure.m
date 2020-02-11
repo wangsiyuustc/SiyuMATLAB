@@ -18,7 +18,9 @@ function [g, ax] = plt_figure(nx, ny, rect, margin, gap, option)
             rect = plt_params.param_preset.figconfig.(fmt).(['fig_size', istitle]){nx,ny};
             margin = plt_params.param_preset.figconfig.(fmt).(['fig_margin', istitle]){nx,ny};
             gap = plt_params.param_preset.figconfig.(fmt).(['fig_gap', istitle]){nx,ny};
+            gap(1); % this is just to test whether gap is empty
         catch
+            disp('no existing preset size');
             rect = plt_params.param_preset.figconfig.(fmt).(['fig_size', istitle]){1,1};
             margin = plt_params.param_preset.figconfig.(fmt).(['fig_margin', istitle]){1,1};
             gap = plt_params.param_preset.figconfig.(fmt).(['fig_gap', istitle]){1,1};

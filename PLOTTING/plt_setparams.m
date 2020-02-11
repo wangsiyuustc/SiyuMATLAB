@@ -17,7 +17,10 @@ function plt_setparams(varargin)
         % plotting params
         plt_params.param_figsetting = plt_params.param_preset.plotparam.(fmt);
         plt_params.param_figsetting.islegbox = false;
+        plt_params.param_figsetting.islegmark = true;
         plt_params.param_figsetting.isbold = false;
+        % (setting) stat params
+        plt_params.param_figsetting.stat_starorvalue = 'star';
 
         plt_setuserparam('param_figsetting', varargin);
     end

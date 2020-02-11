@@ -4,7 +4,7 @@ function out = tool_nanunique(a)
         out = a;
         return;
     end
-    if any(isnan(a))
+    if isnumeric(a) && any(isnan(a))
         a(isnan(a)) = [];
         a(end+1) = NaN;
     end

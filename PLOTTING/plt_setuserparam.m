@@ -13,6 +13,7 @@ function plt_setuserparam(fd, vars)
             i = i + 2;
             plt_params.(fd).(arg) = val;
         else
+            i = i + 1;
             warning(sprintf('command not recognized: %s', arg));
         end
     end

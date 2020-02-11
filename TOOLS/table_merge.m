@@ -20,7 +20,7 @@ function [ab, outidxgp, outid] = table_merge(a, b, col_id)
     
     fnmsa = fieldnames(a);
     fnmsb = fieldnames(b);
-    fnmsb = fnmsb(~contains(fnmsb, fnmsa));
+    fnmsb = fnmsb(~cellfun(@(x)any(strcmp(x,fnmsa)), fnmsb));
     b0 = table;
     for bi = 1:length(fnmsb)
         b0.(fnmsb{bi}) = b.(fnmsb{bi});

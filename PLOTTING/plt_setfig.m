@@ -45,7 +45,7 @@ function plt_setfig(varargin)
                     val = colorfunc(val);
                 else
                     tval = [];
-                    for ni = 1:n_ax
+                    for ni = 1:length(val)
                         tval{ni} = colorfunc(val{ni});
                     end
                     val = tval;
