@@ -90,7 +90,8 @@ classdef exp_psychtoolbox < handle
                 oldTextSize = Screen('TextSize', obj.window.id);
                 Screen('TextSize', obj.window.id, fontsize);
             end
-            switch option
+            option = tool_encell(option);
+            switch option{1}
                 case 'default'
                     DrawFormattedText(obj.window.id, str, ...
                         'center', 'center', fontcolor, obj.font.fontwrapat);

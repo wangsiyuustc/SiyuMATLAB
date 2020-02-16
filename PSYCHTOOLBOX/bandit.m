@@ -14,7 +14,7 @@ classdef bandit < exp_psychtoolbox
         font_bandit
         color_frame
         color_filled
-
+        color_font
         tp_top
         tp_left
         rect
@@ -28,11 +28,19 @@ classdef bandit < exp_psychtoolbox
         function flush(obj)
             obj.numbers = {};
         end
-        function addreward(obj, new)
+        function addreward(obj, new, col)
             obj.numbers{end+1} = new;
+            if ~exist('col')
+                col = obj.colors.white;
+            end
+            obj.color_font{end+1} = col;
         end
-        function setreward(obj, new)
+        function setreward(obj, new, col)
             obj.numbers = tool_encell(new);
+            if ~exist('col')
+                col = repmat({obj.colors.white}, 1, length(obj.numbers));
+            end
+            obj.color_font = tool_encell(col);
         end
         function setup(obj,w,h,w_lever,h_lever,pos_lever,penwidth,dotradius,horizon,lever_side, font_bandit, color_frame, color_filled)
             obj.w = round(w); % width of the box in each bandit
@@ -78,7 +86,7 @@ classdef bandit < exp_psychtoolbox
             Screen('FrameRect', obj.window.id, obj.color_frame, rect, obj.penwidth);
             for i = 1:length(numbers)
                 trec = rect(i,:);
-                obj.talk(numbers{i}, 'window', trec, obj.font_bandit);
+                obj.talk(numbers{i}, 'window', trec, obj.font_bandit, obj.color_font{i});
             end
             switch obj.lever_side
                 case 'left'

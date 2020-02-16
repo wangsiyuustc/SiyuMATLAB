@@ -12,9 +12,14 @@ classdef progressbar < exp_psychtoolbox
         color_progress
         color_temp
         color_finish
+        
+        rect_temp
+        rect_now
+        rect_0
     end
     methods
         function obj = progressbar()
+            obj.window = [];
             obj.flush(0);
         end
         function setup_pgb(obj, window, x, y, yloc, color_progress, color_temp, color_finish)
@@ -36,49 +41,65 @@ classdef progressbar < exp_psychtoolbox
             obj.now = 0;
             obj.temp = 0;
             obj.isstop = 0;
+            obj.computerect;
         end
-        function add(obj, r)
-            obj.temp = obj.temp + r;
-            if obj.now + obj.temp >= obj.threshold
-                obj.isstop = 1;
-                obj.temp = obj.threshold - obj.now;
+        function add(obj, r, i)
+            if ~exist('i') || isempty(i)
+                i = 1;
             end
+            if length(obj.temp) < i
+                obj.temp(i) = 0;
+            end
+            obj.temp(i) = obj.temp(i) + r;
+            if obj.now + sum(obj.temp) >= obj.threshold
+                obj.isstop = 1;
+            end
+            obj.computerect;
         end
         function update(obj)
-            obj.now = obj.now + obj.temp;
+            obj.now = obj.now + sum(obj.temp);
             obj.temp = 0;
+            obj.computerect;
+        end
+        function computerect(obj)
+            if ~isempty(obj.window)
+                yloc = obj.yloc;
+                reward = obj.now * obj.scalefactor;
+                rewardnow = obj.temp * obj.scalefactor;
+                window = obj.window.id;
+                outlineHeight = obj.outlineHeight;
+                outlineLength = obj.outlineLength;
+                xCenter = obj.window.center.x;
+                leftXPosition = xCenter - (outlineLength/2);
+                rightXPosition = xCenter + (outlineLength/2);
+                xCenterReward = leftXPosition + (reward/2);
+                baseRectReward = [0 0 reward (outlineHeight-2)];
+                obj.rect_now = CenterRectOnPointd(baseRectReward, xCenterReward+1, yloc);
+                baseRect = [0 0 outlineLength outlineHeight];
+                obj.rect_0 = CenterRectOnPointd(baseRect, xCenter, yloc);
+                rewardnow = [0 cumsum(rewardnow)];
+                for i = 1:length(rewardnow)-1
+                    baseRectRewardnow = [rewardnow(i) 0 rewardnow(i+1) (outlineHeight-2)];
+                    obj.rect_temp{i} = CenterRectOnPointd(baseRectRewardnow, xCenterReward+ reward/2 + rewardnow(i) + (rewardnow(i+1) - rewardnow(i))/2,...
+                        yloc);
+                end
+            end
         end
         function draw(obj)
-            yloc = obj.yloc;
-            reward = obj.now * obj.scalefactor;
-            rewardnow = obj.temp * obj.scalefactor;
             window = obj.window.id;
-            outlineHeight = obj.outlineHeight;
-            outlineLength = obj.outlineLength;
-            xCenter = obj.window.center.x;
-            leftXPosition = xCenter - (outlineLength/2);
-            rightXPosition = xCenter + (outlineLength/2);
-            xCenterReward = leftXPosition + (reward/2);
-
-            baseRectRewardnow = [0 0 rewardnow (outlineHeight-2)];
-            centeredRectProgressnow = CenterRectOnPointd(baseRectRewardnow, xCenterReward+ reward/2 + rewardnow/2,...
-                yloc);
-
-            baseRectReward = [0 0 reward (outlineHeight-2)];
-            centeredRectProgress = CenterRectOnPointd(baseRectReward, xCenterReward+1, yloc);
+            rectColor = [1 1 1];
+            Screen('FrameRect', window, rectColor, obj.rect_0);
             if obj.isstop
                 rectColorProgressnow = obj.color_finish;
                 rectColorProgress = obj.color_finish;
             else
-                rectColorProgressnow = obj.color_progress;
-                rectColorProgress = obj.color_temp;
+                rectColorProgressnow = tool_encell(obj.color_temp);
+                rectColorProgress = obj.color_progress;
             end
-            baseRect = [0 0 outlineLength outlineHeight];
-            centeredRect = CenterRectOnPointd(baseRect, xCenter, yloc);
-            rectColor = [1 1 1];
-            Screen('FrameRect', window, rectColor, centeredRect);
-            Screen('FillRect', window, rectColorProgress, centeredRectProgress);
-            Screen('FillRect', window, rectColorProgressnow, centeredRectProgressnow);
+            for i = 1:length(obj.temp)
+                Screen('FillRect', window, rectColorProgressnow{i}, obj.rect_temp{i});
+            end
+            Screen('FillRect', window, rectColorProgress, obj.rect_now);
         end
     end
 end
