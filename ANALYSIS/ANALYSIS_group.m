@@ -1,6 +1,6 @@
 function gp = ANALYSIS_group(sub, suffixcompare, additional_compare, switch_paircompare)
     if ~exist('switch_paircompare')
-        switch_paircompare = true;
+        switch_paircompare = false;
     end
     if ~exist('suffixcompare')
         suffixcompare = [];

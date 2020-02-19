@@ -30,7 +30,7 @@ function plt_initialize(varargin)
         figconfig.paper.fig_gap{1,1} = [0.1 0.1];
         
         figconfig.paper.fig_sizet{1,1} = [0.3 0.15 0.4 0.65];
-        figconfig.paper.fig_margint{1,1} = [0.17, 0.2, 0.05, 0.05];
+        figconfig.paper.fig_margint{1,1} = [0.17, 0.2, 0.1, 0.05];
         figconfig.paper.fig_gapt{1,1} = [0.1 0.1];
         
         figconfig.paper.fig_sizet{1,2} = [0.1, 0.15, 0.85, 0.7];
@@ -41,6 +41,10 @@ function plt_initialize(varargin)
         figconfig.paper.fig_margin{1,2} = [0.15, 0.1, 0.05, 0.03];
         figconfig.paper.fig_gap{1,2} = [0.1 0.1];
         
+        figconfig.paper.fig_size{1,3} = [0.05, 0.15, 0.95, 0.55];
+        figconfig.paper.fig_margin{1,3} = [0.18, 0.07, 0.05, 0.03];
+        figconfig.paper.fig_gap{1,3} = [0.1 0.1];
+
         figconfig.paper.fig_sizet{2,2} = [0.15 0.05 0.6 0.9];
         figconfig.paper.fig_margint{2,2} = [0.15, 0.1, 0.1, 0.05];
         figconfig.paper.fig_gapt{2,2} = [0.15 0.1];
@@ -60,6 +64,10 @@ function plt_initialize(varargin)
         figconfig.paper.fig_size{6,4} = [0.15 0.01 0.6 0.96];
         figconfig.paper.fig_margin{6,4} = [0.07, 0.1, 0.05, 0.01];
         figconfig.paper.fig_gap{6,4} = [0.05 0.05];
+        
+        figconfig.paper.fig_size{5,5} = [0.2 0.1 0.6 0.8];
+        figconfig.paper.fig_margin{5,5} = [0.1, 0.08, 0.02, 0.04];
+        figconfig.paper.fig_gap{5,5} = [0.03 0.02];
         plt_params.param_preset.figconfig = figconfig;
         
         
@@ -131,9 +139,6 @@ end
 %     figconfig.fig_margint{1,4} = [0.23, 0.08, 0.05, 0.01];%[];%[0.2, 0.15, 0.1, 0.05];
 %     figconfig.fig_gapt{1,4} =  [0.01 0.01];%[];%[0.1 0.1];
 %
-%     figconfig.fig_size{1,3} = [];%[0.1 0.15 0.85 0.7];
-%     figconfig.fig_margin{1,3} = [];%[0.15, 0.07, 0.05, 0.03];
-%     figconfig.fig_gap{1,3} = [];%[0.1 0.1];
 %
 %     figconfig.fig_sizet{1,3} = [0.05, 0.15, 0.95, 0.55];
 %     figconfig.fig_margint{1,3} = [0.15 0.07 0.05 0.03];

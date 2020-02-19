@@ -1,4 +1,4 @@
-function [g, ax] = plt_figure(nx, ny, rect, margin, gap, option)
+function [g, ax] = plt_figure(nx, ny, rect, margin, gap, option, mat)
     global plt_params
     plt_setfig('new');
     if (exist('nx')~=1) || isempty(nx) || nx < 1
@@ -7,9 +7,12 @@ function [g, ax] = plt_figure(nx, ny, rect, margin, gap, option)
     if (exist('ny')~=1) || isempty(ny) || ny < 1
         ny = 1;
     end
+    if ~exist('mat') || isempty(mat)
+        mat = ones(nx, ny);
+    end
     if ~exist('rect') || ~exist('margin') || ~exist('gap') || isempty(rect) || isempty(margin) || isempty(gap)
         fmt = plt_params.param_setting.format;
-        if exist('option') && option == 1
+        if exist('option') && ~isempty(option) && option == 1
             istitle = 't';
         else
             istitle = '';
@@ -43,12 +46,14 @@ function [g, ax] = plt_figure(nx, ny, rect, margin, gap, option)
     count = 1;
     for i_high = nx:-1:1
         for i_wide = 1:ny
-            bx(1) = sum(wg(1:i_wide)) + sum(wb(1:i_wide-1));
-            bx(2) = sum(hg(1:i_high)) + sum(hb(1:i_high-1));
-            bx(3) = wb(i_wide);
-            bx(4) = hb(i_high);
-            rc{count} = bx;
-            count = count + 1;
+            if mat(nx+ 1- i_high, i_wide) == 1
+                bx(1) = sum(wg(1:i_wide)) + sum(wb(1:i_wide-1));
+                bx(2) = sum(hg(1:i_high)) + sum(hb(1:i_high-1));
+                bx(3) = wb(i_wide);
+                bx(4) = hb(i_high);
+                rc{count} = bx;
+                count = count + 1;
+            end
         end
     end
     for i = 1:length(rc)
@@ -61,5 +66,5 @@ function [g, ax] = plt_figure(nx, ny, rect, margin, gap, option)
     plt_params.axi = 0;
     plt_params.isholdon = false;
     plt_params.leglist = cell(nx*ny);
-    plt_setfig('size', [nx*ny]);
+    plt_setfig('size', [length(rc)]);
 end

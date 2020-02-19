@@ -8,6 +8,9 @@ function plt_setuserparam(fd, vars)
         if strcmp('help', arg)
             i = i + 1;
             disp(inarglist);
+        elseif strcmp('reset', arg)
+            i = i + 1;
+            disp('resetting plt params');
         elseif ~isempty(idx)
             val = vars{i+1};
             i = i + 2;

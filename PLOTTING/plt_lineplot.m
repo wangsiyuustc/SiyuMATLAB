@@ -1,16 +1,20 @@
-function plt_lineplot(av, mbar, x, dotonly)
+function plt_lineplot(av, mbar, x, linestyle)
     %   by sywangr@email.arizona.edu
     %   02/03/2020
     %   av - number of lines by number of dots in each line
-    if ~exist('dotonly')
-        dotonly = false;
+    if ~exist('linestyle')
+        linestyle = 'line';
     end
-    if dotonly
-        option_dot.plt = 'o';
-        option_dot.eb = 'o';
-    else
-        option_dot.plt = '-';
-        option_dot.eb = 'o-';
+    switch linestyle
+        case 'dot'
+            option_dot.plt = 'o';
+            option_dot.eb = 'o';
+        case 'line'
+            option_dot.plt = '-';
+            option_dot.eb = 'o-';
+        case 'dash'
+            option_dot.plt = '--';
+            option_dot.eb = '--';
     end
     global plt_params;
     if (exist('x')~=1) || isempty(x)

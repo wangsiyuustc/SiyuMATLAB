@@ -39,7 +39,7 @@ function plt_setfig(varargin)
                 plt_params.n_ax = val;
                 continue;
             case 'color'
-                colorfunc = @(str)cellfun(@(x)tool_iif(isnumeric(x), x, plt_params.param_preset.colors.(x)),str,'UniformOutput',false);
+                colorfunc = @(str)cellfun(@(x)tool_iif(isnumeric(x), x, calc_color(x)),str,'UniformOutput',false);
                 val = tool_encell(val);
                 if ~iscell(val{1}) % single plot, multiple lines
                     val = colorfunc(val);
@@ -64,4 +64,18 @@ function plt_setfig(varargin)
         end
     end
     plt_params.param_fig.locked = true;
+end
+function out = calc_color(str)
+    global plt_params;
+    if ~(ischar(str) || isstring(str))
+        out = [0 0 0]; % black
+        return;
+    end
+    [num, idx] = str_selectnum(str);
+    if isnan(num)
+        num = 100;
+    end
+    str = str(~idx);
+    col = plt_params.param_preset.colors.(str);
+    out = col * num/100 + (1-num/100) * [1 1 1];
 end

@@ -7,7 +7,7 @@ function plt_update(option)
     end
     for axi = axs
         set(plt_params.gf,'CurrentAxes',plt_params.axes(axi));
-        set(gca, 'FontSize', plt_params.param_figsetting.fontsize_face);
+        set(gca, 'FontSize', plt_params.param_figsetting.fontsize_axes);
         if ~isempty(plt_params.param_fig.xtick)
             if isempty(plt_params.param_fig.xticklabel)
                 set(gca,'XTick', plt_params.param_fig.xtick{axi});
