@@ -16,10 +16,13 @@ classdef progressbar < exp_psychtoolbox
         rect_temp
         rect_now
         rect_0
+        
+        isplot
     end
     methods
         function obj = progressbar()
             obj.window = [];
+            obj.isplot = 1;
             obj.flush(0);
         end
         function setup_pgb(obj, window, x, y, yloc, color_progress, color_temp, color_finish)
@@ -86,20 +89,22 @@ classdef progressbar < exp_psychtoolbox
             end
         end
         function draw(obj)
-            window = obj.window.id;
-            rectColor = [1 1 1];
-            Screen('FrameRect', window, rectColor, obj.rect_0);
-            if obj.isstop
-                rectColorProgressnow = obj.color_finish;
-                rectColorProgress = obj.color_finish;
-            else
-                rectColorProgressnow = tool_encell(obj.color_temp);
-                rectColorProgress = obj.color_progress;
+            if obj.isplot
+                window = obj.window.id;
+                rectColor = [1 1 1];
+                Screen('FrameRect', window, rectColor, obj.rect_0);
+                if obj.isstop
+                    rectColorProgressnow = obj.color_finish;
+                    rectColorProgress = obj.color_finish;
+                else
+                    rectColorProgressnow = tool_encell(obj.color_temp);
+                    rectColorProgress = obj.color_progress;
+                end
+                for i = 1:length(obj.temp)
+                    Screen('FillRect', window, rectColorProgressnow{i}, obj.rect_temp{i});
+                end
+                Screen('FillRect', window, rectColorProgress, obj.rect_now);
             end
-            for i = 1:length(obj.temp)
-                Screen('FillRect', window, rectColorProgressnow{i}, obj.rect_temp{i});
-            end
-            Screen('FillRect', window, rectColorProgress, obj.rect_now);
         end
     end
 end
